@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Petite Pâtisserie | French Bakery in Mylapore, Chennai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prata&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+/* ===== Reset & Base ===== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-bg: #faf9f7;
+  --color-white: #ffffff;
+  --color-text: #2c2c2c;
+  --color-text-light: #6b6b6b;
+  --color-accent: #d4a0a0;
+  --color-accent-dark: #c08080;
+  --color-cream: #f5f0eb;
+  --color-border: #e8e4df;
+  --font-heading: 'Prata', Georgia, serif;
+  --font-body: 'Jost', 'Helvetica Neue', sans-serif;
+  --max-width: 1200px;
+  --section-padding: 100px 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 300;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* ===== Preloader ===== */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+  animation: preloaderFade 0.4s ease 1.2s forwards;
+}
+
+@keyframes preloaderFade {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.preloader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.preloader-ring {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-accent-dark);
+  animation: spin 0.9s linear infinite;
+}
+
+.preloader-text {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--color-text-light);
+  letter-spacing: 1px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== Back to Top ===== */
+.back-to-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 950;
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-text);
+  color: var(--color-white);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(14px);
+  visibility: hidden;
+  transition: all 0.35s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.back-to-top.show {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  background: var(--color-accent-dark);
+  transform: translateY(-3px);
+}
+
+/* ===== Scroll Reveal (with stagger) ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 120ms);
+  will-change: opacity, transform;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+ul {
+  list-style: none;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  display: inline-block;
+  padding: 14px 36px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-text);
+  color: var(--color-white);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-dark);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 14px 0;
+  background: rgba(44, 44, 44, 0.96);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.4s ease;
+}
+
+.navbar.scrolled {
+  background: rgba(44, 44, 44, 0.99);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+.nav-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--color-white);
+  transition: color 0.3s ease;
+}
+
+.nav-logo-img {
+  height: 36px;
+  width: 36px;
+  display: block;
+  border-radius: 50%;
+  background: var(--color-cream);
+  padding: 4px;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 36px;
+}
+
+.nav-link {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-accent);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link:hover {
+  color: var(--color-accent);
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--color-white);
+  transition: all 0.3s ease;
+}
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transform: scale(1.1);
+  will-change: transform;
+}
+
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.1);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.30) 0%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--color-white);
+  padding: 0 24px;
+}
+
+.hero-subtitle {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: heroUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+}
+
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: heroUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+}
+
+.hero-tagline {
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: heroUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
+}
+
+.hero-content .btn {
+  opacity: 0;
+  animation: heroUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.9s forwards;
+}
+
+@keyframes heroUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Scroll Indicator ===== */
+.scroll-indicator {
+  margin-top: 48px;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  animation: heroUp 1s ease 1.3s forwards;
+}
+
+.scroll-mouse {
+  width: 24px;
+  height: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 14px;
+  position: relative;
+}
+
+.scroll-dot {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 4px;
+  height: 8px;
+  margin-left: -2px;
+  border-radius: 4px;
+  background: var(--color-white);
+  animation: scrollDot 1.6s ease-in-out infinite;
+}
+
+@keyframes scrollDot {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+}
+
+/* ===== Section Shared Styles ===== */
+.section-label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-accent-dark);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.section-desc {
+  font-size: 1rem;
+  color: var(--color-text-light);
+  max-width: 480px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-header .section-desc {
+  margin: 0 auto;
+}
+
+/* ===== About ===== */
+.about {
+  padding: var(--section-padding);
+  background: var(--color-white);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.about-image img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 24px;
+}
+
+.about-image {
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.about-text {
+  color: var(--color-text-light);
+  margin-bottom: 22px;
+  font-size: 1.2rem;
+  line-height: 1.85;
+  letter-spacing: 0.2px;
+}
+
+.about-stats {
+  display: flex;
+  gap: 48px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-border);
+}
+
+.stat-number {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ===== Menu ===== */
+.menu {
+  padding: var(--section-padding);
+  background: var(--color-cream);
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.menu-card {
+  background: var(--color-white);
+  overflow: hidden;
+  border-radius: 20px;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.menu-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+}
+
+.menu-card-image {
+  overflow: hidden;
+  height: 240px;
+}
+
+.menu-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.menu-card:hover .menu-card-image img {
+  transform: scale(1.12);
+}
+
+.menu-card-body {
+  padding: 24px;
+}
+
+.menu-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.menu-card-header h3 {
+  font-family: var(--font-heading);
+  font-size: 1.55rem;
+  font-weight: 600;
+}
+
+.menu-price {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-accent-dark);
+}
+
+.menu-card-body p {
+  font-size: 1.05rem;
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+
+/* ===== Gallery ===== */
+.gallery {
+  padding: var(--section-padding);
+  background: var(--color-white);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 280px;
+  gap: 16px;
+}
+
+.gallery-item {
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.12);
+}
+
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 40%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.gallery-overlay span {
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  transform: translateY(12px);
+  transition: transform 0.4s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+  opacity: 1;
+}
+
+.gallery-item:hover .gallery-overlay span {
+  transform: translateY(0);
+}
+
+.gallery-item--tall {
+  grid-row: span 2;
+}
+
+.gallery-item--wide {
+  grid-column: span 2;
+}
+
+/* ===== Testimonials ===== */
+.testimonials {
+  padding: var(--section-padding);
+  background: var(--color-cream);
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.testimonial-card {
+  background: var(--color-white);
+  padding: 40px 32px;
+  border-radius: 18px;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.testimonial-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-stars {
+  color: var(--color-accent-dark);
+  font-size: 1rem;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.testimonial-text {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--color-text-light);
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.testimonial-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.testimonial-author strong {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.testimonial-author span {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+}
+
+/* ===== Contact ===== */
+.contact {
+  padding: var(--section-padding);
+  background: var(--color-white);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+}
+
+.contact-details {
+  margin-top: 32px;
+}
+
+.contact-item {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.contact-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.contact-item strong {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.contact-item p {
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+}
+
+.contact-action {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.contact-action p {
+  color: var(--color-text-light);
+  transition: color 0.3s ease;
+}
+
+.contact-action:hover,
+.contact-action:hover p {
+  color: var(--color-accent-dark);
+}
+
+/* ===== Address Map Card ===== */
+.map-card {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-white) 55%);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  padding: 22px 24px;
+  margin-bottom: 28px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.35s ease;
+}
+
+.map-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  opacity: 0.08;
+  transform: translate(30px, -30px);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.map-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-accent);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+}
+
+.map-card:hover::after {
+  transform: translate(20px, -20px) scale(1.2);
+  opacity: 0.16;
+}
+
+.map-card-pin {
+  font-size: 1.9rem;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-white);
+  border-radius: 50%;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.map-card-text strong {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  color: var(--color-text);
+}
+
+.map-card-text p {
+  font-size: 1rem;
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+
+.map-card-cta {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-accent-dark);
+  border-bottom: 1px solid var(--color-accent-dark);
+  padding-bottom: 2px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.map-card:hover .map-card-cta {
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.contact-form-wrapper h3 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  margin-bottom: 28px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 14px 16px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--color-accent-dark);
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b6b6b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  cursor: pointer;
+}
+
+/* ===== Footer ===== */
+.footer {
+  background: var(--color-text);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 64px 0 32px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 60px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-brand-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.footer-brand-row h3 {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  color: var(--color-white);
+  margin-bottom: 0;
+}
+
+.footer-logo-img {
+  height: 44px;
+  width: 44px;
+  display: block;
+  border-radius: 50%;
+  background: var(--color-cream);
+  padding: 5px;
+}
+
+.footer-brand p {
+  font-size: 0.9rem;
+  max-width: 300px;
+}
+
+.footer-links h4,
+.footer-social h4 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-white);
+  margin-bottom: 20px;
+}
+
+.footer-links ul li {
+  margin-bottom: 10px;
+}
+
+.footer-links ul li a {
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+  color: var(--color-accent);
+}
+
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.social-link {
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.social-link:hover {
+  color: var(--color-accent);
+}
+
+.footer-bottom {
+  padding-top: 32px;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.footer-legal {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.footer-legal a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.3s ease;
+}
+
+.footer-legal a:hover {
+  color: var(--color-accent);
+}
+
+.legal-sep {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ===== Legal Pages (Terms & Privacy) ===== */
+.legal-header {
+  background: var(--color-text);
+  padding: 18px 0;
+}
+
+.legal-header-inner {
+  display: flex;
+  align-items: center;
+}
+
+.legal-back {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+}
+
+.legal-back:hover {
+  color: var(--color-accent);
+}
+
+.legal-page {
+  background: var(--color-white);
+  padding: 70px 0 90px;
+  min-height: 100vh;
+}
+
+.legal-container {
+  max-width: 800px;
+}
+
+.legal-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.legal-updated {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  margin-bottom: 40px;
+}
+
+.legal-section {
+  margin-bottom: 36px;
+}
+
+.legal-section h2 {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.legal-section p {
+  font-size: 1rem;
+  color: var(--color-text-light);
+  line-height: 1.75;
+}
+
+/* Terms page: carded, boxed, bordered layout */
+.legal-page--terms {
+  background: var(--color-cream);
+}
+
+.legal-page--terms .terms-block {
+  display: grid;
+  gap: 20px;
+}
+
+.legal-page--terms .legal-section {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-accent);
+  border-radius: 14px;
+  padding: 28px 30px;
+  margin-bottom: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.legal-page--terms .legal-section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.08);
+}
+
+.legal-page--terms .legal-section h2 {
+  font-size: 1.15rem;
+  color: var(--color-text);
+}
+
+/* Privacy page: minimal, clean, accent left-border on sections */
+.legal-page--privacy {
+  background: var(--color-white);
+}
+
+.legal-page--privacy .legal-section {
+  padding-left: 22px;
+  border-left: 2px solid var(--color-accent);
+  margin-bottom: 32px;
+}
+
+.legal-page--privacy .legal-section h2 {
+  color: var(--color-accent-dark);
+}
+
+.legal-page--privacy .legal-section p {
+  color: var(--color-text-light);
+}
+
+.legal-page--privacy .legal-title {
+  color: var(--color-text);
+}
+
+/* ===== Keyframes (unused - static site) ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .about-grid {
+    gap: 48px;
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .testimonials-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .testimonials-grid .testimonial-card:last-child {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 72px 0;
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+
+  .hero-bg {
+    transform: scale(1.05) !important;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--color-white);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 28px;
+    transition: right 0.4s ease;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-menu.active {
+    right: 0;
+  }
+
+  .nav-menu .nav-link {
+    color: var(--color-text);
+    font-size: 0.9rem;
+  }
+
+  .nav-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 10vw, 4rem);
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .about-image img {
+    height: 350px;
+  }
+
+  .about-stats {
+    gap: 32px;
+  }
+
+  .menu-grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 200px;
+  }
+
+  .gallery-item--wide {
+    grid-column: span 2;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .testimonials-grid .testimonial-card:last-child {
+    grid-column: span 1;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 220px;
+  }
+
+  .gallery-item--tall {
+    grid-row: span 1;
+  }
+
+  .gallery-item--wide {
+    grid-column: span 1;
+  }
+
+  .about-stats {
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-inner">
+      <div class="preloader-ring"></div>
+      <span class="preloader-text">La Petite</span>
+    </div>
+  </div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-container">
+        <a href="#hero" class="nav-logo">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZThiOThiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2MwODA4MCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHBhdGggZD0iTTYgNDYgQyA4IDI4LCAyMiAxOCwgMzIgMTggQyA0MiAxOCwgNTYgMjgsIDU4IDQ2IEMgNTQgNTAsIDQ5IDUwLCA0NiA0NiBDIDQzIDQyLCA0MCA0NCwgMzcgNDcgQyAzNCA1MSwgMjcgNTEsIDI0IDQ3IEMgMjEgNDQsIDE4IDQyLCAxNSA0NiBDIDEyIDUwLCA5IDUwLCA2IDQ2IFoiIGZpbGw9InVybCgjZykiLz4KICA8cGF0aCBkPSJNMTQgMzQgQyAyMCAyOSwgMjUgMjcsIDMxIDI2IE0yMSA0MCBDIDI2IDM3LCAzMiAzNiwgMzkgMzggTTMzIDQ0IEMgMzkgNDIsIDQ1IDQ0LCA1MCA0MiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOWM1ZjNiIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBvcGFjaXR5PSIwLjUiLz4KPC9zdmc+" alt="La Petite Pâtisserie logo" class="nav-logo-img" />
+          <span>La Petite Pâtisserie</span>
+        </a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#menu" class="nav-link">Menu</a></li>
+          <li><a href="#gallery" class="nav-link">Gallery</a></li>
+          <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+          <li><a href="#contact" class="nav-link">Visit Us</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=1920&q=80" alt="Freshly baked croissants in warm light" />
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-subtitle">Bakery &amp; Café · Mylapore, Chennai</p>
+      <h1 class="hero-title">La Petite<br>Pâtisserie</h1>
+      <p class="hero-tagline">Fresh croissants and French pastries, baked every morning</p>
+      <a href="#menu" class="btn btn-primary">See what's on the counter</a>
+      <div class="scroll-indicator">
+        <div class="scroll-mouse">
+          <div class="scroll-dot"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-image reveal" style="--i:0">
+          <img src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=800&q=80" alt="Pâtisserie chef at work" />
+        </div>
+        <div class="about-content reveal" style="--i:1">
+          <p class="section-label">About Us</p>
+          <h2 class="section-title">French pastry,<br>made the slow way</h2>
+          <p class="about-text">
+            La Petite Pâtisserie is a small French bakery in Mylapore, Chennai. Since 2018, we've baked croissants, macarons and éclairs fresh every morning — in small batches, so nothing ever sits on the shelf overnight.
+          </p>
+          <div class="about-stats">
+            <div class="stat">
+              <span class="stat-number">2018</span>
+              <span class="stat-label">Baking since</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">7 AM</span>
+              <span class="stat-label">First batch out</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number"><span class="counter" data-target="100">0</span>%</span>
+              <span class="stat-label">Made on site, daily</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section class="menu" id="menu">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">The Menu</p>
+        <h2 class="section-title">What's in the counter</h2>
+        <p class="section-desc">Prices in ₹ · everything is baked on site in small batches</p>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-card reveal" style="--i:0">
+          <div class="menu-card-image">
+            <img src="https://images.unsplash.com/photo-1756137948703-809897c7051d?fm=jpg&q=80&w=600&auto=format&fit=crop" alt="Classic Croissant" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-header">
+              <h3>Classic Croissant</h3>
+              <span class="menu-price">₹165</span>
+            </div>
+            <p>Laminated over two days and baked each morning. Genuinely best before noon.</p>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="--i:1">
+          <div class="menu-card-image">
+            <img src="https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=600&q=80" alt="Macarons" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-header">
+              <h3>Parisian Macarons</h3>
+              <span class="menu-price">₹120</span>
+            </div>
+            <p>Crisp outside, soft inside. Flavours change every few weeks, so check the counter.</p>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="--i:2">
+          <div class="menu-card-image">
+            <img src="https://images.unsplash.com/photo-1612203985729-70726954388c?w=600&q=80" alt="Éclair" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-header">
+              <h3>Chocolate Éclair</h3>
+              <span class="menu-price">₹240</span>
+            </div>
+            <p>Choux pastry filled with vanilla custard, finished with a layer of dark chocolate.</p>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="--i:3">
+          <div class="menu-card-image">
+            <img src="https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=600&q=80" alt="Tarte Tatin" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-header">
+              <h3>Tarte Tatin</h3>
+              <span class="menu-price">₹310</span>
+            </div>
+            <p>Caramelised apple tart, flipped at the end and served warm. Weekends only.</p>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="--i:4">
+          <div class="menu-card-image">
+            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80" alt="Mille-feuille" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-header">
+              <h3>Mille-Feuille</h3>
+              <span class="menu-price">₹380</span>
+            </div>
+            <p>Custard between caramelised pastry layers with fresh berries on top. Goes fast on Saturdays.</p>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="--i:5">
+          <div class="menu-card-image">
+            <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80" alt="Pain au Chocolat" />
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-header">
+              <h3>Pain au Chocolat</h3>
+              <span class="menu-price">₹190</span>
+            </div>
+            <p>Croissant dough rolled around two pieces of dark chocolate. The kids' favourite.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section class="gallery" id="gallery">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">The Bakery</p>
+        <h2 class="section-title">A few photos</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item gallery-item--tall reveal" style="--i:0">
+          <img src="https://images.unsplash.com/photo-1495147466023-ac5c588e2e94?w=600&q=80" alt="Pastry display" />
+          <div class="gallery-overlay"><span>Pastry Display</span></div>
+        </div>
+        <div class="gallery-item reveal" style="--i:1">
+          <img src="https://images.unsplash.com/photo-1558326567-98ae2405596b?w=600&q=80" alt="Macaron collection" />
+          <div class="gallery-overlay"><span>Macarons</span></div>
+        </div>
+        <div class="gallery-item reveal" style="--i:2">
+          <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&q=80" alt="Coffee and pastry" />
+          <div class="gallery-overlay"><span>Coffee & Pastry</span></div>
+        </div>
+        <div class="gallery-item gallery-item--wide reveal" style="--i:3">
+          <img src="https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=800&q=80" alt="Bakery interior" />
+          <div class="gallery-overlay"><span>Inside the Bakery</span></div>
+        </div>
+        <div class="gallery-item reveal" style="--i:4">
+          <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=600&q=80" alt="Fresh bread" />
+          <div class="gallery-overlay"><span>Fresh Bread</span></div>
+        </div>
+        <div class="gallery-item gallery-item--tall reveal" style="--i:5">
+          <img src="https://images.unsplash.com/photo-1483695028939-5bb13f8648b0?w=600&q=80" alt="Pastry closeup" />
+          <div class="gallery-overlay"><span>Pâtisserie</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Reviews</p>
+        <h2 class="section-title">People keep coming back</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal" style="--i:0">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            "The plain croissant here is genuinely the best I've had outside Europe. Flaky, buttery, and the almond version they do on Fridays is worth the drive from Velachery."
+          </p>
+          <div class="testimonial-author">
+            <div>
+              <strong>Priya Raman</strong>
+              <span>Regular since 2020</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal" style="--i:1">
+          <div class="testimonial-stars">★★★★☆</div>
+          <p class="testimonial-text">
+            "Ordered a custom cake for my mother's birthday over WhatsApp — they handled everything, delivered on time. The pistachio mousse was lovely. Only wish they'd add more savoury options."
+          </p>
+          <div class="testimonial-author">
+            <div>
+              <strong>Arun Prakash</strong>
+              <span>Custom cake order</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal" style="--i:2">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            "Bought the macaron box for a small function and the packaging got every photo a like. Lavender and rose are my favourites. Call ahead though — they sell out by early evening most days."
+          </p>
+          <div class="testimonial-author">
+            <div>
+              <strong>Meena Sridhar</strong>
+              <span>Watched on Google reviews</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <p class="section-label">Visit Us</p>
+          <h2 class="section-title">You'll find us in Mylapore</h2>
+          <div class="contact-details">
+            <a class="map-card" href="https://www.google.com/maps/search/?api=1&query=Bazaar+Road+Mylapore+Chennai" target="_blank" rel="noopener">
+              <div class="map-card-pin">📍</div>
+              <div class="map-card-text">
+                <strong>Find us at</strong>
+                <p>No. 12, Bazaar Road, Mylapore<br>Chennai, Tamil Nadu – 600004</p>
+                <span class="map-card-cta">Get Directions →</span>
+              </div>
+            </a>
+            <div class="contact-item">
+              <div class="contact-icon">🕐</div>
+              <div>
+                <strong>Hours</strong>
+                <p>Mon – Sat: 7:30 AM – 8:30 PM<br>Sunday: 8:00 AM – 1:00 PM</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">📞</div>
+              <div>
+                <strong>Phone / WhatsApp</strong>
+                <a class="contact-action" href="tel:+919840123456">+91 98401 23456</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">✉️</div>
+              <div>
+                <strong>Email</strong>
+                <a class="contact-action" href="mailto:lapetitepatisserie.chennai@gmail.com">lapetitepatisserie.chennai@gmail.com</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form-wrapper reveal">
+          <h3>Write to us</h3>
+          <form class="contact-form" id="contact-form">
+            <div class="form-group">
+              <input type="text" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <input type="email" placeholder="Your email" required />
+            </div>
+            <div class="form-group">
+              <select>
+                <option value="" disabled selected>What is this about?</option>
+                <option>Order / booking</option>
+                <option>Cake orders</option>
+                <option>Bulk or event orders</option>
+                <option>Something else</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <textarea rows="5" placeholder="Tell us what you need" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Send it</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-row">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZThiOThiIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2MwODA4MCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHBhdGggZD0iTTYgNDYgQyA4IDI4LCAyMiAxOCwgMzIgMTggQyA0MiAxOCwgNTYgMjgsIDU4IDQ2IEMgNTQgNTAsIDQ5IDUwLCA0NiA0NiBDIDQzIDQyLCA0MCA0NCwgMzcgNDcgQyAzNCA1MSwgMjcgNTEsIDI0IDQ3IEMgMjEgNDQsIDE4IDQyLCAxNSA0NiBDIDEyIDUwLCA5IDUwLCA2IDQ2IFoiIGZpbGw9InVybCgjZykiLz4KICA8cGF0aCBkPSJNMTQgMzQgQyAyMCAyOSwgMjUgMjcsIDMxIDI2IE0yMSA0MCBDIDI2IDM3LCAzMiAzNiwgMzkgMzggTTMzIDQ0IEMgMzkgNDIsIDQ1IDQ0LCA1MCA0MiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOWM1ZjNiIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBvcGFjaXR5PSIwLjUiLz4KPC9zdmc+" alt="La Petite Pâtisserie logo" class="footer-logo-img" />
+            <h3>La Petite Pâtisserie</h3>
+          </div>
+          <p>Small French pastry shop in Mylapore, Chennai. Baked fresh every morning since 2018.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Visit Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-social">
+          <h4>Contact</h4>
+          <div class="social-links">
+            <a href="mailto:lapetitepatisserie.chennai@gmail.com" class="social-link">lapetitepatisserie.chennai@gmail.com</a>
+            <a href="tel:+919840123456" class="social-link">+91 98401 23456</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Bazaar+Road+Mylapore+Chennai" target="_blank" rel="noopener" class="social-link">Bazaar Road, Mylapore, Chennai</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 La Petite Pâtisserie, Chennai. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="terms.html">Terms &amp; Conditions</a>
+          <span class="legal-sep">·</span>
+          <a href="privacy.html">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+// ===== Navbar Scroll Effect =====
+const navbar = document.getElementById('navbar');
+const backToTop = document.getElementById('back-to-top');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+
+  if (window.scrollY > 500) {
+    backToTop.classList.add('show');
+  } else {
+    backToTop.classList.remove('show');
+  }
+});
+
+// ===== Back to Top =====
+backToTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ===== Mobile Menu Toggle =====
+const navToggle = document.getElementById('nav-toggle');
+const navMenu = document.getElementById('nav-menu');
+
+navToggle.addEventListener('click', () => {
+  navToggle.classList.toggle('active');
+  navMenu.classList.toggle('active');
+});
+
+// Close menu when a link is clicked
+navMenu.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    navToggle.classList.remove('active');
+    navMenu.classList.remove('active');
+  });
+});
+
+// ===== Preloader =====
+const preloader = document.getElementById('preloader');
+
+window.addEventListener('load', () => {
+  document.body.classList.remove('no-scroll');
+  setTimeout(() => preloader.classList.add('hidden'), 400);
+});
+
+// Lock scroll while preloader is visible
+document.body.classList.add('no-scroll');
+
+// ===== Scroll Reveal (with stagger) =====
+const revealElements = document.querySelectorAll('.reveal');
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.12,
+  rootMargin: '0px 0px -60px 0px'
+});
+
+revealElements.forEach(el => revealObserver.observe(el));
+
+// ===== Hero Parallax =====
+const heroBg = document.querySelector('.hero-bg');
+const heroContent = document.querySelector('.hero-content');
+
+let ticking = false;
+
+function updateParallax() {
+  const y = window.scrollY;
+  if (heroBg && y < window.innerHeight) {
+    heroBg.style.transform = `translateY(${y * 0.35}px) scale(1.1)`;
+    heroContent.style.transform = `translateY(${y * 0.2}px)`;
+    heroContent.style.opacity = 1 - (y / window.innerHeight) * 1.3;
+  }
+  ticking = false;
+}
+
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    window.requestAnimationFrame(updateParallax);
+    ticking = true;
+  }
+}, { passive: true });
+
+// ===== Animated Counters =====
+function animateCounter(element) {
+  const target = element.dataset.target;
+  if (!target) return;
+  const duration = 1500;
+  const start = performance.now();
+
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    element.textContent = Math.floor(eased * target).toLocaleString();
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      element.textContent = Number(target).toLocaleString();
+    }
+  }
+  requestAnimationFrame(update);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounter(entry.target);
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.6 });
+
+document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+// ===== Contact Form Handler =====
+const contactForm = document.getElementById('contact-form');
+
+contactForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const btn = contactForm.querySelector('.btn');
+  const originalText = btn.textContent;
+  btn.textContent = 'Thanks — we\u2019ll reply soon';
+  contactForm.reset();
+  setTimeout(() => {
+    btn.textContent = originalText;
+  }, 4000);
+});
+
+  </script>
+</body>
+</html>
